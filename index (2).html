@@ -1,0 +1,907 @@
+</body
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biodata & Profil Diri - Dhohikatun Mustapsiroh</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* latar belakang love */
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .hearts span {
+            position: absolute;
+            display: block;
+            color: #ff4d6d;
+            font-size: 20px;
+            animation: fall 10s linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* gaya utama */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #C60986, #A40D76);
+            color: #840E77;
+        }
+        .welcome-page {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            background: transparent;
+        }
+        .welcome-page h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .welcome-page img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            object-fit: cover;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+        .container, .project-page {
+            width: 90%;
+            max-width: 900px;
+            background: white;
+            margin: 40px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            display: none;
+            color: #000;
+        }
+        h2 { color: #f96; border-bottom: 2px solid #f96; padding-bottom: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        td { padding: 8px; vertical-align: top; }
+        td:first-child { font-weight: bold; width: 30%; }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #f96;
+            color: white;
+            margin-top: 20px;
+            display: none;
+        }
+        .link-projek {
+            display: block;
+            text-align: center;
+            color: #f96;
+            font-weight: bold;
+            margin: 20px 0;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        header { background: #0099cc; color: white; padding: 20px; text-align: center; }
+        section { padding: 20px; }
+        th, td { border: 1px solid #ddd; text-align: center; }
+        th { background: #0099cc; color: white; }
+        .chart-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .chart-box {
+            flex: 1 1 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .kesimpulan {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .refleksi {
+            margin-top: 30px;
+            background: #fef4fa;
+            padding: 15px;
+            border-left: 5px solid #f96;
+            border-radius: 6px;
+        }
+        .profil-diri {
+            max-width: 800px;
+            background: #fff;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            color: #000;
+        }
+        .profil-diri h1 { color: #4b6cb7; text-align: center; }
+        .profil-diri p { text-align: justify; font-size: 1.1em; }
+
+        /* Tambahan style untuk hobi dan bahasa */
+        .hobi-section { padding: 20px; text-align: center; }
+        .hobi-card {
+            display: inline-block;
+            width: 250px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            vertical-align: top;
+            background: #fff;
+        }
+        .hobi-card img { width: 100%; height: 150px; object-fit: cover; }
+        .hobi-card .deskripsi { padding: 10px; }
+        .language-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .lang-button {
+            padding: 8px 16px;
+            background-color: #f96;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .lang-button:hover { background-color: #ff8c51; }
+        
+        .section-content {
+            display: none;
+        }
+        .section-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- love background -->
+    <div class="hearts">
+        <span>❤</span><span>❤</span><span>❤</span><span>❤</span><span>❤</span>
+        <span>❤</span><span>❤</span><span>❤</span><span>❤</span><span>❤</span>
+        <span>❤</span><span>❤</span><span>❤</span><span>❤</span><span>❤</span>
+    </div>
+
+    <!-- Halaman pembuka -->
+    <div class="welcome-page" id="welcomePage">
+        <h1 onclick="showBiodata()" id="welcomeTitle">Identitas Diri</h1>
+        <img src="katunn.jpg" alt="Foto Profil">
+    </div>
+
+    <!-- Konten biodata -->
+    <div class="container" id="biodataContainer">
+        <div class="language-selector">
+            <button class="lang-button" onclick="setLanguage('id')">ID</button>
+            <button class="lang-button" onclick="setLanguage('en')">EN</button>
+            <button class="lang-button" onclick="setLanguage('jv')">JV</button>
+            <button class="lang-button" onclick="setLanguage('ar')">AR</button>
+        </div>
+        <h2 id="personalTitle">1. Identitas Pribadi</h2>
+        <table>
+            <tr><td id="fullNameLabel">Nama Lengkap</td><td>: Dhohikatun Mustapsiroh</td></tr>
+            <tr><td id="birthLabel">Tempat, Tanggal Lahir</td><td>: Pekalongan, 27 Mei 2009</td></tr>
+            <tr><td id="genderLabel">Jenis Kelamin</td><td>: Perempuan</td></tr>
+            <tr><td id="religionLabel">Agama</td><td>: Islam</td></tr>
+            <tr><td id="nationalityLabel">Kewarganegaraan</td><td>: Indonesia</td></tr>
+            <tr><td id="addressLabel">Alamat</td><td>: NO: 13, RT:13,RW:13,Desa:Karanganyar, Kecamatan:Tirto ,Gg: 14 (Belakang balai desa) KARANGANYAR, KAB. PEKALONGAN, JAWA TENGAH, KODE POSE:51151</td></tr>
+            <tr><td id="emailLabel">Email</td><td>: dhohikatunmustapcece@gamil.com</td></tr>
+            <tr><td id="phoneLabel">No. Telepon</td><td>: 0882-0032-70011</td></tr>
+        </table>
+        <h2 id="eduTitle">2. Data Pendidikan</h2>
+        <table>
+            <tr><td id="paudLabel">PAUD</td><td>: Paud AZ-Zahra Karanganyar Tirto (2011-2012)</td></tr>
+            <tr><td id="tkLabel">TK</td><td>: RA Muslimat NU Karanganyar Tirto (2013-14)</td></tr>
+            <tr><td id="sdLabel">SD/MI</td><td>: MIS Kartika Karanganyar Tirto (2015-2020)</td></tr>
+            <tr><td id="mtsLabel">MTs</td><td>: SMP Terpadu Nurul Islam Surobayan (2021-2024)</td></tr>
+            <tr><td id="smkLabel">SMK</td><td>: Ma’arif NU Tirto, Kabupaten Pekalongan</td></tr>
+            <tr><td id="majorLabel">Jurusan</td><td>: Teknik Komputer dan Jaringan (TKJ)</td></tr>
+        </table>
+        <h2 id="ambitionTitle">3. Cita-cita & Motivasi</h2>
+        <p id="ambitionDesc">“Saya ingin menjadi pribadi yang bermanfaat bagi orang lain. Untuk itu saya berusaha belajar dengan sungguh-sungguh, menjaga sikap, dan terus mengembangkan keterampilan agar kelak bisa meraih cita-cita dan membantu keluarga maupun masyarakat.”</p>
+        <table>
+            <tr><td id="goalLabel">Cita-cita</td><td>: Taruni Pelayaran</td></tr>
+            <tr><td id="mottoLabel">4.Motto Hidup</td><td>: "Tidak Ada Jalan Tanpa Debu, Dan Tidak Ada Jalan Kesuksesan Tanpa Do'a Ibu"</td></tr>
+            
+            </div> 
+        <h2>4.📝 Visi</h2>
+        <p>Menjadi pribadi yang berakhlak mulia, berilmu luas, disiplin, dan bermanfaat bagi masyarakat dengan berlandaskan nilai-nilai Islam seperti kejujuran, disiplin, dan kepedulian.</p>
+        
+        </div>
+        <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Minat & Pengalaman</title>
+</head>
+<body>
+    <h2>5.Minat & Pengalaman</h2>
+    <ol type="a">
+        <li><strong>Pengalaman</strong><br />
+            Pernah bekerja paruh waktu membantu di toko kelontong selama beberapa bulan, belajar melayani pelanggan dan mengelola barang dagangan.
+        </li>
+        <li><strong>Minat</strong><br />
+            Gemar membaca buku dan mengikuti kegiatan olahraga untuk menjaga kesehatan dan semangat belajar.
+        </li>
+        
+        </table>
+        <h2 id="activityTitle">6. Aktivitas dalam Seminggu</h2>
+        <table>
+            <tr><td id="monFriLabel">Senin - Jumat</td><td id="monFriDesc">Belajar dan Praktek Jaringan Komputer</td></tr>
+            <tr><td id="satLabel">Sabtu</td><td id="satDesc">Olahraga dan Menjaga Kesehatan</td></tr>
+            <tr><td id="sunLabel">Minggu</td><td id="sunDesc">Rehat dan Kegiatan Bersama Keluarga</td></tr>
+            <tr><td id="sleepLabel">Tidur</td><td id="sleepDesc">Jam tidur 8 jam untuk menjaga kesehatan tubuh</td></tr>
+        </table>
+        <span class="link-projek" onclick="showProject()" id="projectLink">Hasil Proyek</span>
+    </div>
+
+    <!-- Halaman proyek + statistik -->
+    <div class="project-page" id="projectPage">
+        <div class="language-selector">
+            <button class="lang-button" onclick="setLanguage('id')">ID</button>
+            <button class="lang-button" onclick="setLanguage('en')">EN</button>
+            <button class="lang-button" onclick="setLanguage('jv')">JV</button>
+            <button class="lang-button" onclick="setLanguage('ar')">AR</button>
+        </div>
+        <header><h1 id="headerTitle">Biodata Diri - Dhohikatun Mustapsiroh</h1></header>
+        <section>
+            <h2 id="mathProjectTitle"</h2>6. Projek Matematika</h2>
+            <h3 id="academicAchievementTitle">Prestasi Akademik</h3>
+            <div class="chart-container">
+                <canvas id="barAkademik"></canvas>
+            </div>
+            <h3 id="nonAcademicAchievementTitle">Prestasi Non Akademik</h3>
+            <div class="chart-container">
+                <canvas id="barNonAkademik"></canvas>
+            </div>
+            <h3 id="academicPieTitle">Diagram Lingkaran Prestasi Akademik</h3>
+            <div class="chart-container">
+                <canvas id="pieAkademik"></canvas>
+            </div>
+            <h3 id="nonAcademicPieTitle">Diagram Lingkaran Prestasi Non Akademik</h3>
+            <div class="chart-container">
+                <canvas id="pieNonAkademik"></canvas>
+            </div>
+            <h3 id="summaryTitle">Kesimpulan</h3>
+            <p id="summaryDesc">
+                Jumlah prestasi Akademik: <b>3</b> (B. Arab 99, Inggris 89, B. Jawa 86).<br>
+                Jumlah prestasi Non Akademik: <b>2</b>.<br>
+                Prestasi Akademik lebih banyak daripada Non Akademik yaitu sekitar 60% Akademik dan 40% Non Akademik.
+            </p>
+
+            <!-- Bagian baru: Aktivitas Harian -->
+            <h2 id="dailyActivityTitle">Aktivitas Harian & Kualitas Tidur</h2>
+            <h3 id="dailyBarTitle">Diagram Batang Aktivitas Harian</h3>
+            <div class="chart-container">
+                <canvas id="dailyActivityBar"></canvas>
+            </div>
+            <h3 id="dailyPieTitle">Diagram Lingkaran Aktivitas Harian</h3>
+            <div class="chart-container">
+                <canvas id="dailyActivityPie"></canvas>
+            </div>
+
+            <!-- Bagian refleksi diri -->
+            <h2 id="counselingProjectTitle">8. Projek BK</h2>
+            <div class="refleksi">
+                <p id="selfReflectP1">Selama perjalanan pendidikan saya dari PAUD hingga SMK, saya telah mendapatkan banyak pengalaman yang membentuk karakter, kepercayaan diri, dan keterampilan saya. Saya belajar tentang disiplin, kerja keras, serta pentingnya menghargai waktu dan kesempatan.</p>
+                <p id="selfReflectP2">Minat saya dalam bidang teknologi jaringan komputer muncul sejak duduk di bangku SMP ketika saya sering membantu teman dan guru mengatasi masalah perangkat lunak sederhana. Kegemaran ini semakin berkembang saat di SMK, di mana saya mempelajari Teknik Komputer dan Jaringan secara lebih mendalam.</p>
+                <p id="selfReflectP3">Di luar bidang akademik, saya juga aktif berolahraga untuk menjaga kebugaran dan membentuk mental yang sehat. Saya memiliki prestasi di bidang akademik dan non akademik, seperti lomba cerdas cermat, desain poster, dan kegiatan ekstrakurikuler yang melatih kepemimpinan.</p>
+                <p id="selfReflectP4">Semua pengalaman ini memperkuat motivasi saya untuk terus berkembang, mengasah potensi, dan meraih cita-cita sebagai Taruni Pelayaran yang disiplin, tangguh, dan berintegritas tinggi. Saya percaya setiap usaha yang dilakukan hari ini adalah investasi berharga untuk masa depan.</p>
+            </div>
+
+            <!-- Tambahan konten Projek Sejarah -->
+            <div class="profil-diri">
+                <h1 id="profileTitle">Profil Diri</h1>
+                <h2 id="historyProjectTitle">9.Projek Sejarah</h2>
+                <p id="historyP1"><p>Saya lahir di sebuah desa kecil dengan keterbatasan fasilitas. Sejak kecil, saya sudah terbiasa membantu orang tua setelah pulang sekolah. Keterbatasan ekonomi tidak menjadi penghalang bagi saya untuk terus bersekolah.</p>
+
+<p>Saat SD, saya harus berjalan kaki hampir 3 kilometer setiap hari. Meski lelah, saya selalu berusaha hadir tepat waktu. Saya juga aktif membantu teman-teman belajar dan mengikuti lomba-lomba sederhana di sekolah.</p>
+
+<p>Ketika SMP, saya mulai menghadapi tantangan baru. Orang tua hampir tidak sanggup membiayai sekolah saya. Saya mencari beasiswa dan ikut program belajar tambahan gratis dari pemerintah. Dengan usaha keras, saya berhasil mempertahankan prestasi akademik dan mendapatkan beasiswa.</p>
+
+<p>Di SMK, perjuangan saya semakin besar. Saya harus mengatur waktu antara belajar, membantu orang tua, dan bekerja paruh waktu di warung kecil untuk menambah uang saku. Semua itu saya lakukan dengan penuh kesabaran dan doa.</p>
+
+<p>Sekarang saya sudah berada di jenjang akhir SMK. Dengan segala perjuangan ini, saya bercita-cita melanjutkan kuliah agar bisa mengangkat derajat keluarga dan bermanfaat bagi masyarakat. Saya yakin dengan kerja keras, doa, dan dukungan orang tua, cita-cita saya akan terwujud.</p>
+            </div>
+
+            <!-- Bagian Hobi / Kegiatan Olahraga -->
+            <section class="hobi-section">
+                <h2 id="peProjectTitle">10.Kegiatan Olahraga & Hobi(Projek Pjok)</h2>
+                <!-- Hobi Running -->
+                <div class="hobi-card">
+                    <img src="ika.jpg" alt="Running / Lari">
+                    <div class="deskripsi">
+                        <h3 id="runningTitle">Running / Lari</h3>
+                        <p id="runningDesc1">Saya dulu berprestasi dilari, dulu saya juara 3 lomba lari Tinggkat kecamatan. Dan sekarang saya ikut running patriot dikajen.</p>
+                        <p id="runningDesc2">Hobi berlari setiap pagi di sekitar rumah untuk menjaga kebugaran tubuh.</p>
+                    </div>
+                </div>
+                <!-- Hobi Membaca -->
+                <div class="hobi-card">
+                    <img src="ikatun.jpg" alt="Membaca Buku">
+                    <div class="deskripsi">
+                        <h3 id="readingTitle">Membaca Buku</h3>
+                        <p id="readingDesc">Senang membaca buku cerita dan novel di waktu senggang.</p>
+                    </div>
+                    
+                    </div>
+                    <!-- tugas <pai></pai> -->
+<h2>11. Projek PAI <h2></h2>
+    <div class="visi-cita">
+        <h2>📝 Visi</h2>
+        <p>Menjadi pribadi yang berakhlak mulia, berilmu luas, disiplin, dan bermanfaat bagi masyarakat dengan berlandaskan nilai-nilai Islam seperti kejujuran, disiplin, dan kepedulian.</p>
+        
+        <h2>📝 Cita-Cita</h2>
+        <p>Ingin menjadi seorang Taruni Pelayaran yang disiplin, tangguh, berintegritas tinggi, serta dapat memberikan teladan dan manfaat bagi keluarga, masyarakat, dan bangsa dengan tetap berpegang pada ajaran agama.
+                </div>
+                <html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resep Seblak Kuah Pedas</title>
+    <!-- Load Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Menggunakan Font Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fef3f2; /* Warna latar belakang lembut */
+        }
+        /* Styling khusus untuk bagian 'Kencur' sebagai jiwa seblak */
+        .kencur-highlight {
+            border-left: 5px solid #ef4444; /* Border merah */
+            background-color: #fef2f2; /* Background sangat lembut */
+        }
+        /* Custom scrollbar style for aesthetics (optional) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f87171;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <!-- Header Utama -->
+        <header class="bg-red-600 text-white p-6 rounded-t-2xl shadow-lg mb-8">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-center tracking-tight">
+               Kelebihan Memasak &seblak kuah pedes
+                🔥 Resep Seblak Kuah Pedas Sederhana 🔥
+            </h1>
+            <p class="text-center mt-2 text-sm sm:text-base opacity-90">
+                Hidangan camilan khas Bandung yang gurih, pedas, dan kenyal!
+            </p>
+        </header>
+
+        <!-- Konten Utama Resep -->
+        <main class="bg-white p-6 sm:p-8 rounded-b-2xl shadow-2xl space-y-8">
+            
+            <!-- Deskripsi Singkat -->
+            <p class="text-gray-700 leading-relaxed text-base">
+                kelebihan dalam memasak
+            </p></p>
+                Saya dhohikatun mustapsiroh memiliki kelebihan dalam dunia memasak yang membuat saya semakin semangat belajar dan berkreasi
+            </p>
+
+            <!-- 1. Bahan-Bahan Dasar (Inti Seblak) -->
+            <section>
+                <h2 class="text-2xl font-bold text-red-700 mb-4 border-b-2 border-orange-400 pb-2">
+                    1. Bahan-Bahan Dasar (Inti Seblak)
+                </h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
+                        <thead class="bg-red-500 text-white">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Kategori</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Bahan</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Catatan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200 text-sm">
+                            <tr class="hover:bg-red-50"><td class="px-4 py-3 font-semibold" rowspan="4">Bahan Utama & Kuah</td>
+                                <td class="px-4 py-3">Kerupuk (mentah)</td>
+         
+                                <td class="px-4 py-3">1 genggam besar</td>
+                                <td class="px-4 py-3 text-xs">Rendam air panas 15-30 menit hingga agak lunak.</td>
+                            </tr>
+                            <tr class="hover:bg-red-50">
+                                <td class="px-4 py-3">Telur Ayam</td>
+                                <td class="px-4 py-3">1 butir</td>
+                                <td class="px-4 py-3 text-xs">Kocok lepas (Opsional).</td>
+                            </tr>
+                            <tr class="hover:bg-red-50">
+                                <td class="px-4 py-3">Bakso/Sosis</td>
+                                <td class="px-4 py-3">Sesuai selera</td>
+                                <td class="px-4 py-3 text-xs">Iris tipis (Opsional).</td>
+                            </tr>
+                            <tr class="hover:bg-red-50">
+                                <td class="px-4 py-3">Air (Kuah)</td>
+                                <td class="px-4 py-3">200 - 300 ml</td>
+                                <td class="px-4 py-3 text-xs">Sesuaikan kekentalan yang diinginkan.</td>
+                            </tr>
+                            <tr class="hover:bg-red-50"><td class="px-4 py-3 font-semibold">Sayuran</td>
+                                <td class="px-4 py-3">Sawi hijau/Kol</td>
+                                <td class="px-4 py-3">Secukupnya</td>
+                                <td class="px-4 py-3 text-xs">Potong-potong (Opsional).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- 2. Bumbu Halus (Kunci Rasa Seblak) -->
+            <section>
+                <h2 class="text-2xl font-bold text-red-700 mb-4 border-b-2 border-orange-400 pb-2">
+                    2. Bumbu Halus (Kunci Rasa Seblak)
+                </h2>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4 p-4 rounded-lg kencur-highlight">
+                    <div class="text-center"><span class="block text-3xl">🌶️</span><p class="font-semibold">Cabai Rawit Merah</p><p class="text-sm text-gray-600">10 - 15 buah</p></div>
+                    <div class="text-center"><span class="block text-3xl">🌶️</span><p class="font-semibold">Cabai Merah Keriting</p><p class="text-sm text-gray-600">5 buah</p></div>
+                    <div class="text-center"><span class="block text-3xl">🧅</span><p class="font-semibold">Bawang Merah</p><p class="text-sm text-gray-600">2 siung</p></div>
+                    <div class="text-center"><span class="block text-3xl">🧄</span><p class="font-semibold">Bawang Putih</p><p class="text-sm text-gray-600">1 siung</p></div>
+                    <div class="text-center font-extrabold text-red-600"><span class="block text-3xl">🌿</span><p>Kencur (Wajib)</p><p class="text-sm">1 - 2 ruas jari</p></div>
+                </div>
+                <p class="text-sm italic text-gray-600 mt-2">
+                    <span class="font-bold">Cara Menghaluskan:</span> Haluskan semua bumbu di atas menggunakan cobek atau *blender*. Kencur adalah "jiwa" seblak, jangan dihilangkan!
+                </p>
+            </section>
+
+            <!-- 3. Bumbu Penyedap -->
+            <section>
+                <h2 class="text-2xl font-bold text-red-700 mb-4 border-b-2 border-orange-400 pb-2">
+                    3. Bumbu Penyedap
+                </h2>
+                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                    <li><span class="font-semibold">Minyak Goreng (2 sdm):</span> Untuk menumis bumbu.</li>
+                    <li><span class="font-semibold">Garam (Secukupnya):</span> Memberi rasa asin.</li>
+                    <li><span class="font-semibold">Gula Pasir (Sedikit/sejumput):</span> Penyeimbang rasa pedas dan gurih.</li>
+                    <li><span class="font-semibold">Kaldu Bubuk (Secukupnya):</span> Penguat rasa.</li>
+                </ul>
+            </section>
+            
+            <!-- 4. Teknik Memasak Seblak -->
+            <section>
+                <h2 class="text-2xl font-bold text-red-700 mb-4 border-b-2 border-orange-400 pb-2">
+                    4. Teknik Memasak Seblak (Langkah Demi Langkah)
+                </h2>
+                <ol class="list-decimal list-inside space-y-4 text-gray-800 font-medium ml-4">
+                    
+                    <li>
+                        <span class="text-red-600 font-extrabold">Persiapan Kerupuk (Kunci Tekstur)</span>
+                        <ul class="list-disc list-inside ml-6 text-sm text-gray-600">
+                            <li>Masukkan kerupuk mentah ke dalam mangkuk. Tuangkan **air panas mendidih** hingga kerupuk terendam.</li>
+                            <li>Biarkan selama 15-30 menit atau sampai kerupuk menjadi **lunak dan kenyal**. Tiriskan dan sisihkan.</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <span class="text-red-600 font-extrabold">Menumis Bumbu (Kunci Aroma)</span>
+                        <ul class="list-disc list-inside ml-6 text-sm text-gray-600">
+                            <li>Panaskan 2 sdm minyak di wajan dengan api sedang.</li>
+                            <li>Masukkan bumbu halus dan tumis hingga **benar-benar matang**. Pastikan **kencur tercium wanginya** dan bumbu tidak langu.</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <span class="text-red-600 font-extrabold">Memasak Protein</span>
+                        <ul class="list-disc list-inside ml-6 text-sm text-gray-600">
+                            <li>Dorong bumbu ke pinggir wajan. Tuang telur kocok di sisi wajan yang kosong, **orak-arik hingga matang**.</li>
+                            <li>Masukkan bakso/sosis/protein lain. Masak sebentar hingga tercampur rata.</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <span class="text-red-600 font-extrabold">Membuat Kuah & Koreksi Rasa</span>
+                        <ul class="list-disc list-inside ml-6 text-sm text-gray-600">
+                            <li>Tuangkan air (200-300 ml) ke dalam wajan. Aduk rata.</li>
+                            <li>Masukkan garam, gula, dan kaldu bubuk. **Koreksi rasa** (cicipi kuahnya) hingga didapatkan rasa gurih pedas yang pas.</li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <span class="text-red-600 font-extrabold">Penyelesaian Akhir</span>
+                        <ul class="list-disc list-inside ml-6 text-sm text-gray-600">
+                            <li>Masukkan kerupuk yang sudah lunak dan sayuran (sawi/kol).</li>
+                            <li>Masak sebentar (sekitar 1-2 menit) hingga kuah sedikit mengental atau menyerap.</li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <span class="text-red-600 font-extrabold">Penyajian</span>
+                        <p class="text-sm text-gray-600 mt-1">Angkat seblak dan sajikan selagi hangat. Tambahkan taburan bawang goreng atau irisan daun bawang.</p>
+                    </li>
+
+                </ol>
+            </section>
+
+            <!-- 5. Tips dan Trik -->
+            <section class="bg-yellow-50 p-6 rounded-lg border border-yellow-300">
+                <h2 class="text-xl font-bold text-red-700 mb-3">
+                    5. hasil karya#seblak kuah pedes
+                <div><img src="seblak.jpg"</div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center mt-8 text-gray-500 text-sm">
+            &copy; Resep Sederhana Seblak Kuah - Selamat Mencoba!
+        </footer>
+
+    </div>
+</body>
+</html>
+
+            </section>
+        </section>
+        <button class="lang-button" onclick="backToBiodata()" id="backButton">Kembali ke Biodata</button>
+    </div>
+
+    <footer id="footer">&copy; 2025 Dhohikatun Mustapsiroh</footer>
+
+    <script>
+        // Data dan terjemahan
+        const texts = {
+            'id': {
+                welcomeTitle: 'Identitas Diri', personalTitle: '1. Identitas Pribadi', fullNameLabel: 'Nama Lengkap',
+                birthLabel: 'Tempat, Tanggal Lahir', genderLabel: 'Jenis Kelamin', religionLabel: 'Agama',
+                nationalityLabel: 'Kewarganegaraan', addressLabel: 'Alamat', emailLabel: 'Email',
+                phoneLabel: 'No. Telepon', eduTitle: '2. Data Pendidikan', paudLabel: 'PAUD',
+                tkLabel: 'TK', sdLabel: 'SD/MI', mtsLabel: 'MTs', smkLabel: 'SMK', majorLabel: 'Jurusan',
+                ambitionTitle: '3. Cita-cita & Motivasi', ambitionDesc: '“Saya ingin menjadi pribadi yang bermanfaat bagi orang lain. Untuk itu saya berusaha belajar dengan sungguh-sungguh, menjaga sikap, dan terus mengembangkan keterampilan agar kelak bisa meraih cita-cita dan membantu keluarga maupun masyarakat.”',
+                goalLabel: 'Cita-cita', mottoLabel: '4. Motto Hidup', activityTitle: '5. Aktivitas dalam Seminggu',
+                monFriLabel: 'Senin - Jumat', monFriDesc: 'Belajar dan Praktek Jaringan Komputer', satLabel: 'Sabtu',
+                satDesc: 'Olahraga dan Menjaga Kesehatan', sunLabel: 'Minggu', sunDesc: 'Rehat dan Kegiatan Bersama Keluarga',
+                sleepLabel: 'Tidur', sleepDesc: 'Jam tidur 8 jam untuk menjaga kesehatan tubuh', projectLink: 'Hasil Proyek',
+                headerTitle: 'Biodata Diri - Dhohikatun Mustapsiroh', mathProjectTitle: '5. Projek Matematika',
+                academicAchievementTitle: 'Prestasi Akademik', nonAcademicAchievementTitle: 'Prestasi Non Akademik',
+                academicPieTitle: 'Diagram Lingkaran Prestasi Akademik', nonAcademicPieTitle: 'Diagram Lingkaran Prestasi Non Akademik',
+                summaryTitle: 'Kesimpulan', summaryDesc: 'Jumlah prestasi Akademik: <b>3</b> (B. Arab 99, Inggris 89, B. Jawa 86).<br>Jumlah prestasi Non Akademik: <b>2</b>.<br>Prestasi Akademik lebih banyak daripada Non Akademik yaitu sekitar 60% Akademik dan 40% Non Akademik.',
+                dailyActivityTitle: 'Aktivitas Harian & Kualitas Tidur', dailyBarTitle: 'Diagram Batang Aktivitas Harian',
+                dailyPieTitle: 'Diagram Lingkaran Aktivitas Harian', counselingProjectTitle: '7. Projek BK',
+                selfReflectP1: 'Selama perjalanan pendidikan saya dari PAUD hingga SMK, saya telah mendapatkan banyak pengalaman yang membentuk karakter, kepercayaan diri, dan keterampilan saya. Saya belajar tentang disiplin, kerja keras, serta pentingnya menghargai waktu dan kesempatan.',
+                selfReflectP2: 'Minat saya dalam bidang teknologi jaringan komputer muncul sejak duduk di bangku SMP ketika saya sering membantu teman dan guru mengatasi masalah perangkat lunak sederhana. Kegemaran ini semakin berkembang saat di SMK, di mana saya mempelajari Teknik Komputer dan Jaringan secara lebih mendalam.',
+                selfReflectP3: 'Di luar bidang akademik, saya juga aktif berolahraga untuk menjaga kebugaran dan membentuk mental yang sehat. Saya memiliki prestasi di bidang akademik dan non akademik, seperti lomba cerdas cermat, desain poster, dan kegiatan ekstrakurikuler yang melatih kepemimpinan.',
+                selfReflectP4: 'Semua pengalaman ini memperkuat motivasi saya untuk terus berkembang, mengasah potensi, dan meraih cita-cita sebagai Taruni Pelayaran yang disiplin, tangguh, dan berintegritas tinggi. Saya percaya setiap usaha yang dilakukan hari ini adalah investasi berharga untuk masa depan.',
+                profileTitle: 'Profil Diri', historyProjectTitle: '8. Projek Sejarah',
+                historyP1: 'Saya lahir di Pekalongan pada tanggal 27 Mei 2009. Sejak kecil saya tumbuh di lingkungan desa yang penuh kebersamaan.',
+                historyP2: 'Saya mulai sekolah di MIS Kartika Karanganyar, lalu melanjutkan ke SMP Terpadu Surobayan. Selama masa sekolah saya aktif mengikuti kegiatan pramuka.',
+                historyP3: 'Pengalaman-pengalaman itu membuat saya lebih percaya diri dan belajar bekerja sama dengan orang lain.',
+                peProjectTitle: '9. Kegiatan Olahraga & Hobi(Projek Pjok)', runningTitle: 'Running / Lari',
+                runningDesc1: 'Saya dulu berprestasi dilari, dulu saya juara 3 lomba lari Tinggkat kecamatan. Dan sekarang saya ikut running patriot dikajen.',
+                runningDesc2: 'Hobi berlari setiap pagi di sekitar rumah untuk menjaga kebugaran tubuh.',
+                readingTitle: 'Membaca Buku', readingDesc: 'Senang membaca buku cerita dan novel di waktu senggang.',
+                backButton: 'Kembali ke Biodata', footerText: '&copy; 2025 Dhohikatun Mustapsiroh'
+            },
+            'en': {
+                welcomeTitle: 'Personal Identity', personalTitle: '1. Personal Identity', fullNameLabel: 'Full Name',
+                birthLabel: 'Place, Date of Birth', genderLabel: 'Gender', religionLabel: 'Religion',
+                nationalityLabel: 'Nationality', addressLabel: 'Address', emailLabel: 'Email',
+                phoneLabel: 'Phone Number', eduTitle: '2. Education Data', paudLabel: 'Early Childhood Education',
+                tkLabel: 'Kindergarten', sdLabel: 'Elementary School', mtsLabel: 'Junior High School',
+                smkLabel: 'Vocational High School', majorLabel: 'Major',
+                ambitionTitle: '3. Ambition & Motivation', ambitionDesc: '“I want to be a person who is beneficial to others. For that, I strive to study diligently, maintain my attitude, and continue to develop skills so that one day I can achieve my goals and help my family and community.”',
+                goalLabel: 'Ambition', mottoLabel: '4. Life Motto', activityTitle: '5. Weekly Activities',
+                monFriLabel: 'Monday - Friday', monFriDesc: 'Learning and Practicing Computer Networks', satLabel: 'Saturday',
+                satDesc: 'Sports and Health Maintenance', sunLabel: 'Sunday', sunDesc: 'Rest and Family Activities',
+                sleepLabel: 'Sleep', sleepDesc: '8 hours of sleep to maintain body health', projectLink: 'Project Results',
+                headerTitle: 'Biodata & Personal Profile - Dhohikatun Mustapsiroh', mathProjectTitle: '5. Math Project',
+                academicAchievementTitle: 'Academic Achievements', nonAcademicAchievementTitle: 'Non-Academic Achievements',
+                academicPieTitle: 'Academic Achievements Pie Chart', nonAcademicPieTitle: 'Non-Academic Achievements Pie Chart',
+                summaryTitle: 'Conclusion', summaryDesc: 'Total Academic Achievements: <b>3</b> (Arabic 99, English 89, Javanese 86).<br>Total Non-Academic Achievements: <b>2</b>.<br>Academic Achievements are more than Non-Academic, about 60% Academic and 40% Non-Academic.',
+                dailyActivityTitle: 'Daily Activities & Sleep Quality', dailyBarTitle: 'Daily Activities Bar Chart',
+                dailyPieTitle: 'Daily Activities Pie Chart', counselingProjectTitle: '7. Counseling Project',
+                selfReflectP1: 'During my educational journey from PAUD to SMK, I have gained many experiences that have shaped my character, self-confidence, and skills. I learned about discipline, hard work, and the importance of valuing time and opportunity.',
+                selfReflectP2: 'My interest in computer network technology emerged in junior high school when I often helped friends and teachers with simple software problems. This passion grew even more in vocational school, where I learned about Computer and Network Engineering in more depth.',
+                selfReflectP3: 'Outside of academics, I am also active in sports to maintain physical fitness and a healthy mindset. I have achievements in both academic and non-academic fields, such as quiz bowls, poster design competitions, and extracurricular activities that train leadership.',
+                selfReflectP4: 'All these experiences strengthen my motivation to continue to grow, hone my potential, and achieve my goal of becoming a disciplined, tough, and highly-integrated Maritime Cadet. I believe every effort made today is a valuable investment for the future.',
+                profileTitle: 'Personal Profile', historyProjectTitle: '8. History Project',
+                historyP1: 'I was born in Pekalongan on May 27, 2009. Since I was little, I grew up in a village environment full of togetherness.',
+                historyP2: 'I started school at MIS Kartika Karanganyar, then continued to SMP Terpadu Surobayan. During my school years, I was active in scout activities.',
+                historyP3: 'Those experiences made me more confident and taught me to work together with others.',
+                peProjectTitle: '9. Sports & Hobbies (PE Project)', runningTitle: 'Running',
+                runningDesc1: 'I used to have achievements in running, I was the 3rd place winner of a sub-district level running competition. Now I participate in the Kajen patriot running club.',
+                runningDesc2: 'My hobby is running every morning around my house to maintain physical fitness.',
+                readingTitle: 'Reading Books', readingDesc: 'I enjoy reading storybooks and novels in my free time.',
+                backButton: 'Back to Biodata', footerText: '&copy; 2025 Dhohikatun Mustapsiroh'
+            },
+            'jv': {
+                welcomeTitle: 'Jati Dhiri', personalTitle: '1. Jati Dhiri', fullNameLabel: 'Jeneng Lengkap',
+                birthLabel: 'Papan, Tanggal Wiyosan', genderLabel: 'Jinis Kelamin', religionLabel: 'Agama',
+                nationalityLabel: 'Warga Negara', addressLabel: 'Alamat', emailLabel: 'Email',
+                phoneLabel: 'Nomer Telepon', eduTitle: '2. Data Pamulangan', paudLabel: 'PAUD',
+                tkLabel: 'Taman Kanak-kanak', sdLabel: 'Sekolah Dasar/Madrasah Ibtidaiyah', mtsLabel: 'Madrasah Tsanawiyah',
+                smkLabel: 'Sekolah Menengah Kejuruan', majorLabel: 'Jurusan',
+                ambitionTitle: '3. Gegayuhan & Motivasi', ambitionDesc: '“Kula kepengin dados pribadi ingkang migunani kagem tiyang sanes. Kagem menika, kula ngupayakaken sinau kanthi temenan, njagi sikap, lan terus ngembangaken katrampilan supados samangke saged nggayuh gegayuhan lan mbiyantu kulawarga ugi masyarakat.”',
+                goalLabel: 'Gegayuhan', mottoLabel: '4. Motto Urip', activityTitle: '5. Kegiyatan Sajroning Seminggu',
+                monFriLabel: 'Senen - Jemuah', monFriDesc: 'Sinau lan Praktek Jaringan Komputer', satLabel: 'Setu',
+                satDesc: 'Olah raga lan Njagi Kawarasan', sunLabel: 'Ahad', sunDesc: 'Leren lan Kegiyatan Sesarengan Kaliyan Kulawarga',
+                sleepLabel: 'Sare', sleepDesc: '8 jam sare kangge njagi kawarasan badan', projectLink: 'Asil Proyek',
+                headerTitle: 'Biodata & Profil Dhiri - Dhohikatun Mustapsiroh', mathProjectTitle: '5. Proyek Matematika',
+                academicAchievementTitle: 'Prestasi Akademik', nonAcademicAchievementTitle: 'Prestasi Non Akademik',
+                academicPieTitle: 'Diagram Bunder Prestasi Akademik', nonAcademicPieTitle: 'Diagram Bunder Prestasi Non Akademik',
+                summaryTitle: 'Dudutan', summaryDesc: 'Cacahing prestasi Akademik: <b>3</b> (B. Arab 99, Inggris 89, B. Jawa 86).<br>Cacahing prestasi Non Akademik: <b>2</b>.<br>Prestasi Akademik langkung kathah tinimbang Non Akademik, inggih menika sekitar 60% Akademik lan 40% Non Akademik.',
+                dailyActivityTitle: 'Kegiyatan Saben Dinten & Kualitas Sare', dailyBarTitle: 'Diagram Batang Kegiyatan Saben Dinten',
+                dailyPieTitle: 'Diagram Bunder Kegiyatan Saben Dinten', counselingProjectTitle: '7. Proyek BK',
+                selfReflectP1: 'Sajroning lampah pamulangan kula saking PAUD dumugi SMK, kula sampun pikantuk kathah pengalaman ingkang ndhapuk karakter, pitados dhiri, lan katrampilan kula. Kula sinau bab disiplin, nyambut damel kanthi temenan, ugi wigatosipun ngajeni wekdal lan kalodhangan.',
+                selfReflectP2: 'Minat kula ing babagan teknologi jaringan komputer muncul wiwit lungguh ing bangku SMP nalika kula asring mbiyantu kanca lan guru ngrampungaken masalah perangkat lunak ingkang sederhana. Hobi menika tansah ngembang nalika ing SMK, ing pundi kula sinau Teknik Komputer lan Jaringan kanthi langkung jero.',
+                selfReflectP3: 'Ing sanjawinipun babagan akademik, kula ugi aktif olah raga kangge njagi kasugaran lan ndhapuk mental ingkang sehat. Kula gadhah prestasi ing babagan akademik lan non akademik, kados lomba cerdas cermat, desain poster, lan kegiyatan ekstrakurikuler ingkang nglatih kepemimpinan.',
+                selfReflectP4: 'Sedaya pengalaman menika nguwaosi motivasi kula supados terus ngembang, ngasah potensi, lan nggayuh gegayuhan minangka Taruni Pelayaran ingkang disiplin, tangguh, lan gadhah integritas inggil. Kula pitados saben upaya ingkang dipunlampahaken dinten menika inggih menika investasi ingkang aji kagem masa depan.',
+                profileTitle: 'Profil Dhiri', historyProjectTitle: '8. Proyek Sejarah',
+                historyP1: 'Kula lair ing Pekalongan tanggal 27 Mei 2009. Wiwit alit, kula ageng ing lingkungan dhusun ingkang kebak guyub rukun.',
+                historyP2: 'Kula wiwit sekolah ing MIS Kartika Karanganyar, lajeng nglajengaken dhateng SMP Terpadu Surobayan. Sajroning masa sekolah, kula aktif ndherek kegiyatan pramuka.',
+                historyP3: 'Pengalaman-pengalaman menika ndadosaken kula langkung pitados dhiri lan sinau nyambut damel sesarengan kaliyan tiyang sanes.',
+                peProjectTitle: '9. Kegiyatan Olah Raga & Hobi (Proyek PJOK)', runningTitle: 'Mlayu',
+                runningDesc1: 'Kula riyen gadhah prestasi mlayu, kula juara 3 lomba mlayu tingkat kecamatan. Sakmenika kula ndherek running patriot ing Kajen.',
+                runningDesc2: 'Hobi kula mlayu saben enjing ing sakubenge griya kangge njagi kasugaraning badan.',
+                readingTitle: 'Maca Buku', readingDesc: 'Sengsem maos buku cariyos lan novel ing wekdal senggang.',
+                backButton: 'Wangsul dhateng Biodata', footerText: '&copy; 2025 Dhohikatun Mustapsiroh'
+            },
+            'ar': {
+                welcomeTitle: 'الهوية الشخصية', personalTitle: '1. الهوية الشخصية', fullNameLabel: 'الاسم الكامل',
+                birthLabel: 'مكان وتاريخ الميلاد', genderLabel: 'الجنس', religionLabel: 'الدين',
+                nationalityLabel: 'الجنسية', addressLabel: 'العنوان', emailLabel: 'البريد الإلكتروني',
+                phoneLabel: 'رقم الهاتف', eduTitle: '2. بيانات التعليم', paudLabel: 'تعليم الطفولة المبكرة',
+                tkLabel: 'روضة الأطفال', sdLabel: 'المدرسة الابتدائية', mtsLabel: 'المدرسة الثانوية الإعدادية',
+                smkLabel: 'المدرسة الثانوية المهنية', majorLabel: 'التخصص',
+                ambitionTitle: '3. الطموح والدافع', ambitionDesc: '“أريد أن أكون شخصًا نافعًا للآخرين. ولتحقيق ذلك، أسعى للدراسة بجد، والحفاظ على سلوكي، ومواصلة تطوير مهاراتي حتى أتمكن يومًا ما من تحقيق أهدافي ومساعدة عائلتي ومجتمعي.”',
+                goalLabel: 'الطموح', mottoLabel: '4. شعار الحياة', activityTitle: '5. الأنشطة الأسبوعية',
+                monFriLabel: 'الاثنين - الجمعة', monFriDesc: 'الدراسة وممارسة شبكات الحاسوب', satLabel: 'السبت',
+                satDesc: 'الرياضة والحفاظ على الصحة', sunLabel: 'الأحد', sunDesc: 'الراحة والأنشطة العائلية',
+                sleepLabel: 'النوم', sleepDesc: '8 ساعات من النوم للحفاظ على صحة الجسم', projectLink: 'نتائج المشروع',
+                headerTitle: 'السيرة الذاتية والملف الشخصي - ضحيكة مستبصرة', mathProjectTitle: '5. مشروع الرياضيات',
+                academicAchievementTitle: 'الإنجازات الأكاديمية', nonAcademicAchievementTitle: 'الإنجازات غير الأكاديمية',
+                academicPieTitle: 'مخطط دائري للإنجازات الأكاديمية', nonAcademicPieTitle: 'مخطط دائري للإنجازات غير الأكاديمية',
+                summaryTitle: 'الخلاصة', summaryDesc: 'إجمالي الإنجازات الأكاديمية: <b>3</b> (اللغة العربية 99، الإنجليزية 89، الجاوية 86).<br>إجمالي الإنجازات غير الأكاديمية: <b>2</b>.<br>الإنجازات الأكاديمية أكثر من غير الأكاديمية، حوالي 60% أكاديمية و 40% غير أكاديمية.',
+                dailyActivityTitle: 'الأنشطة اليومية وجودة النوم', dailyBarTitle: 'مخطط شريطي للأنشطة اليومية',
+                dailyPieTitle: 'مخطط دائري للأنشطة اليومية', counselingProjectTitle: '7. مشروع التوجيه والإرشاد',
+                selfReflectP1: 'خلال رحلتي التعليمية من التعليم المبكر حتى المدرسة الثانوية المهنية، اكتسبت العديد من الخبرات التي صقلت شخصيتي وثقتي بنفسي ومهاراتي. تعلمت الانضباط والعمل الجاد وأهمية تقدير الوقت والفرص.',
+                selfReflectP2: 'ظهر اهتمامي بتقنية شبكات الحاسوب منذ المرحلة الثانوية الإعدادية عندما كنت غالبًا ما أساعد الأصدقاء والمعلمين في حل مشاكل البرامج البسيطة. ازداد هذا الشغف أكثر في المدرسة الثانوية المهنية، حيث درست هندسة الحاسوب والشبكات بعمق أكبر.',
+                selfReflectP3: 'بعيدًا عن الجانب الأكاديمي، أنا أيضًا نشطة في الرياضة للحفاظ على لياقتي البدنية وعقلي سليم. لدي إنجازات في كلا المجالين الأكاديمي وغير الأكاديمي، مثل مسابقات الذكاء وتصميم الملصقات والأنشطة اللاصفية التي تدرب على القيادة.',
+                selfReflectP4: 'كل هذه الخبرات تعزز دافعي للاستمرار في النمو، وصقل إمكاناتي، وتحقيق هدفي بأن أصبح طالبة بحرية منضبطة وقوية وذات نزاهة عالية. أنا أؤمن بأن كل جهد يبذل اليوم هو استثمار ثمين للمستقبل.',
+                profileTitle: 'الملف الشخصي', historyProjectTitle: '8. مشروع التاريخ',
+                historyP1: 'ولدت في بيكالونجان بتاريخ 27 مايو 2009. منذ صغري، نشأت في بيئة قروية مليئة بالتآلف.',
+                historyP2: 'بدأت الدراسة في المدرسة الابتدائية MIS Kartika Karanganyar، ثم واصلت إلى SMP Terpadu Surobayan. خلال سنوات الدراسة، كنت نشطة في أنشطة الكشافة.',
+                historyP3: 'تلك التجارب جعلتني أكثر ثقة بالنفس وعلمتني كيفية التعاون مع الآخرين.',
+                peProjectTitle: '9. الأنشطة الرياضية والهوايات (مشروع التربية البدنية)', runningTitle: 'الركض',
+                runningDesc1: 'لقد كان لدي إنجازات سابقة في الركض، حيث فزت بالمركز الثالث في سباق الركض على مستوى المنطقة الفرعية. والآن أشارك في نادي الركض الوطني في كاجين.',
+                runningDesc2: 'هوايتي هي الركض كل صباح حول المنزل للحفاظ على اللياقة البدنية.',
+                readingTitle: 'قراءة الكتب', readingDesc: 'أحب قراءة كتب القصص والروايات في وقت فراغي.',
+                backButton: 'العودة إلى السيرة الذاتية', footerText: '&copy; 2025 Dhohikatun Mustapsiroh'
+            }
+        };
+
+        let academicChart, nonAcademicChart, academicPie, nonAcademicPie, dailyBarChart, dailyPieChart;
+
+        function renderCharts() {
+            // Hapus chart lama jika ada
+            if (academicChart) academicChart.destroy();
+            if (nonAcademicChart) nonAcademicChart.destroy();
+            if (academicPie) academicPie.destroy();
+            if (nonAcademicPie) nonAcademicPie.destroy();
+            if (dailyBarChart) dailyBarChart.destroy();
+            if (dailyPieChart) dailyPieChart.destroy();
+
+            // data prestasi akademik
+            const akademikLabels = ['B. Arab', 'Inggris', 'B. Jawa'];
+            const akademikData = [99, 89, 86];
+
+            // data prestasi non-akademik
+            const nonAkademikLabels = ['Cerdas Cermat', 'Desain Poster'];
+            const nonAkademikData = [1, 1]; // representasi jumlah
+
+            // data aktivitas harian (dalam jam)
+            const dailyActivityLabels = ['Belajar & Praktek', 'Olahraga', 'Rehat & Keluarga', 'Tidur', 'Lain-lain'];
+            const dailyActivityData = [6, 2, 4, 8, 4]; // Total 24 jam
+
+            // Bar Chart Akademik
+            academicChart = new Chart(document.getElementById('barAkademik'), {
+                type: 'bar',
+                data: {
+                    labels: akademikLabels,
+                    datasets: [{
+                        label: 'Nilai Prestasi Akademik',
+                        data: akademikData,
+                        backgroundColor: ['#4CAF50', '#2196F3', '#FFC107']
+                    }]
+                },
+                options: { responsive: true, scales: { y: { beginAtZero: true } } }
+            });
+
+            // Bar Chart Non Akademik
+            nonAcademicChart = new Chart(document.getElementById('barNonAkademik'), {
+                type: 'bar',
+                data: {
+                    labels: nonAkademikLabels,
+                    datasets: [{
+                        label: 'Jumlah Prestasi Non Akademik',
+                        data: nonAkademikData,
+                        backgroundColor: ['#FF5722', '#F44336']
+                    }]
+                },
+                options: { responsive: true, scales: { y: { beginAtZero: true } } }
+            });
+
+            // Pie Chart Akademik
+            academicPie = new Chart(document.getElementById('pieAkademik'), {
+                type: 'pie',
+                data: {
+                    labels: akademikLabels,
+                    datasets: [{
+                        data: akademikData,
+                        backgroundColor: ['#4CAF50', '#2196F3', '#FFC107']
+                    }]
+                },
+                options: { responsive: true }
+            });
+
+            // Pie Chart Non Akademik
+            nonAcademicPie = new Chart(document.getElementById('pieNonAkademik'), {
+                type: 'pie',
+                data: {
+                    labels: nonAkademikLabels,
+                    datasets: [{
+                        data: nonAkademikData,
+                        backgroundColor: ['#FF5722', '#F44336']
+                    }]
+                },
+                options: { responsive: true }
+            });
+
+            // Bar Chart Aktivitas Harian
+            dailyBarChart = new Chart(document.getElementById('dailyActivityBar'), {
+                type: 'bar',
+                data: {
+                    labels: dailyActivityLabels,
+                    datasets: [{
+                        label: 'Jumlah Jam per Hari',
+                        data: dailyActivityData,
+                        backgroundColor: ['#A40D76', '#C60986', '#0099cc', '#33b5e5', '#f96']
+                    }]
+                },
+                options: { responsive: true, scales: { y: { beginAtZero: true, max: 24 } } }
+            });
+
+            // Pie Chart Aktivitas Harian
+            dailyPieChart = new Chart(document.getElementById('dailyActivityPie'), {
+                type: 'pie',
+                data: {
+                    labels: dailyActivityLabels,
+                    datasets: [{
+                        data: dailyActivityData,
+                        backgroundColor: ['#A40D76', '#C60986', '#0099cc', '#33b5e5', '#f96']
+                    }]
+                },
+                options: { responsive: true }
+            });
+        }
+
+        // Fungsi untuk mengubah bahasa
+        function setLanguage(lang) {
+            const translation = texts[lang];
+            if (!translation) return;
+
+            // Mengubah teks di seluruh elemen
+            document.getElementById('welcomeTitle').textContent = translation.welcomeTitle;
+            document.title = translation.headerTitle;
+            document.getElementById('personalTitle').textContent = translation.personalTitle;
+            document.getElementById('fullNameLabel').textContent = translation.fullNameLabel;
+            document.getElementById('birthLabel').textContent = translation.birthLabel;
+            document.getElementById('genderLabel').textContent = translation.genderLabel;
+            document.getElementById('religionLabel').textContent = translation.religionLabel;
+            document.getElementById('nationalityLabel').textContent = translation.nationalityLabel;
+            document.getElementById('addressLabel').textContent = translation.addressLabel;
+            document.getElementById('emailLabel').textContent = translation.emailLabel;
+            document.getElementById('phoneLabel').textContent = translation.phoneLabel;
+            document.getElementById('eduTitle').textContent = translation.eduTitle;
+            document.getElementById('paudLabel').textContent = translation.paudLabel;
+            document.getElementById('tkLabel').textContent = translation.tkLabel;
+            document.getElementById('sdLabel').textContent = translation.sdLabel;
+            document.getElementById('mtsLabel').textContent = translation.mtsLabel;
+            document.getElementById('smkLabel').textContent = translation.smkLabel;
+            document.getElementById('majorLabel').textContent = translation.majorLabel;
+            document.getElementById('ambitionTitle').textContent = translation.ambitionTitle;
+            document.getElementById('ambitionDesc').textContent = translation.ambitionDesc;
+            document.getElementById('goalLabel').textContent = translation.goalLabel;
+            document.getElementById('mottoLabel').textContent = translation.mottoLabel;
+            document.getElementById('activityTitle').textContent = translation.activityTitle;
+            document.getElementById('monFriLabel').textContent = translation.monFriLabel;
+            document.getElementById('monFriDesc').textContent = translation.monFriDesc;
+            document.getElementById('satLabel').textContent = translation.satLabel;
+            document.getElementById('satDesc').textContent = translation.satDesc;
+            document.getElementById('sunLabel').textContent = translation.sunLabel;
+            document.getElementById('sunDesc').textContent = translation.sunDesc;
+            document.getElementById('sleepLabel').textContent = translation.sleepLabel;
+            document.getElementById('sleepDesc').textContent = translation.sleepDesc;
+            document.getElementById('projectLink').textContent = translation.projectLink;
+            document.getElementById('backButton').textContent = translation.backButton;
+            document.getElementById('headerTitle').textContent = translation.headerTitle;
+            document.getElementById('mathProjectTitle').textContent = translation.mathProjectTitle;
+            document.getElementById('academicAchievementTitle').textContent = translation.academicAchievementTitle;
+            document.getElementById('nonAcademicAchievementTitle').textContent = translation.nonAcademicAchievementTitle;
+            document.getElementById('academicPieTitle').textContent = translation.academicPieTitle;
+            document.getElementById('nonAcademicPieTitle').textContent = translation.nonAcademicPieTitle;
+            document.getElementById('summaryTitle').textContent = translation.summaryTitle;
+            document.getElementById('summaryDesc').innerHTML = translation.summaryDesc;
+            document.getElementById('dailyActivityTitle').textContent = translation.dailyActivityTitle;
+            document.getElementById('dailyBarTitle').textContent = translation.dailyBarTitle;
+            document.getElementById('dailyPieTitle').textContent = translation.dailyPieTitle;
+            document.getElementById('counselingProjectTitle').textContent = translation.counselingProjectTitle;
+            document.getElementById('selfReflectP1').textContent = translation.selfReflectP1;
+            document.getElementById('selfReflectP2').textContent = translation.selfReflectP2;
+            document.getElementById('selfReflectP3').textContent = translation.selfReflectP3;
+            document.getElementById('selfReflectP4').textContent = translation.selfReflectP4;
+            document.getElementById('profileTitle').textContent = translation.profileTitle;
+            document.getElementById('historyProjectTitle').textContent = translation.historyProjectTitle;
+            document.getElementById('historyP1').textContent = translation.historyP1;
+            document.getElementById('historyP2').textContent = translation.historyP2;
+            document.getElementById('historyP3').textContent = translation.historyP3;
+            document.getElementById('peProjectTitle').textContent = translation.peProjectTitle;
+            document.getElementById('runningTitle').textContent = translation.runningTitle;
+            document.getElementById('runningDesc1').textContent = translation.runningDesc1;
+            document.getElementById('runningDesc2').textContent = translation.runningDesc2;
+            document.getElementById('readingTitle').textContent = translation.readingTitle;
+            document.getElementById('readingDesc').textContent = translation.readingDesc;
+            document.getElementById('footer').innerHTML = translation.footerText;
+        }
+
+        // animasi love random
+        const hearts = document.querySelectorAll('.hearts span');
+        hearts.forEach(heart => {
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+        });
+
+        function showBiodata() {
+            document.getElementById('welcomePage').style.display = 'none';
+            document.getElementById('biodataContainer').style.display = 'block';
+            document.getElementById('footer').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function showProject() {
+            document.getElementById('biodataContainer').style.display = 'none';
+            document.getElementById('projectPage').style.display = 'block';
+            renderCharts();
+            window.scrollTo(0, 0);
+        }
+
+        function backToBiodata() {
+            document.getElementById('projectPage').style.display = 'none';
+            document.getElementById('biodataContainer').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // Set bahasa default saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage('id');
+        });
+    </script>
+</body>
+</html>
